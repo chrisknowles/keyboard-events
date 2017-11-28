@@ -48,7 +48,7 @@ Keyboard({
   props: {},                             // pass props to all actions
   actions: [                             // define your actions
     ['enter', {                          // the key name to listen to (see commands below)
-      fn: process,                       // calls the 'process' function below
+      fn: handleEnterKey,                       // calls the 'handleEnterKey' function below
       data: {}                           // pass data to this action only
       once: true                         // automatically unsubscribe this listener after one event
     }],
@@ -58,7 +58,7 @@ Keyboard({
   ]
 });
 
-function process(data) {
+function handleEnterKey(data) {
   data.event.preventDefault(); // stop the form from submitting
   // ...                       // do processing
 }
@@ -121,7 +121,7 @@ import MyActions from 'my-actions.js';
 Keyboard({
   elm: document.querySelector('#input'),
   props: {},                             
-  import: MyActions,    // import the actions from my-actions.js
+  use: MyActions,       // import the actions from my-actions.js
   actions: [            // extend/overwrite the imported actions with your own              
     ['enter', {                          
       fn: process
@@ -218,7 +218,7 @@ There is an option to pass that allows for using the `cmd` key. If you don't set
 ```javascript
 // in this example, if cmd+b were not defined then pressing cmd+b would have no effect
 Keyboard({
-  useCmd: true,
+  useCmdKey: true,
   actions: [
     ['cmd+b', {}],
     ['ctrl+b', {}]

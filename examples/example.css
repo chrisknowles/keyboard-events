@@ -1,0 +1,22 @@
+body {
+  font: 1em Helvetica,Arial,sans-serif;
+}
+.container {
+  width: 400px;
+  margin: 0 auto;
+}
+ul {
+  list-style: none;
+  margin: 0 0 4em 0;
+}
+li {
+  margin: 0;
+  padding: 0.5em 1em;
+}
+li:hover {
+  background: #EEE;
+}
+li:focus {
+  outline: 1px dashed #DDD;
+  background: #EEE;
+}

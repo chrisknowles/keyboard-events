@@ -77,6 +77,8 @@ var toConsumableArray = function (arr) {
  * included with your own actions.
  */
 
+var document = void 0;
+
 /**
  * Key code to friendly name mappings
  */
@@ -98,21 +100,23 @@ var fns = {
   45: 'insert',
   46: 'delete',
   144: 'numlock'
+};
 
-  /**
-   * Key code to special key friendly name mappings
-   */
-};var metaKeys = {
+/**
+ * Key code to special key friendly name mappings
+ */
+var metaKeys = {
   16: 'shift',
   17: 'ctrl',
   18: 'alt',
   91: 'cmd'
+};
 
-  /**
-   * Keeps the special key states for building
-   * command strings from
-   */
-};var metaKeysState = new Map([[91, { name: 'cmd', selected: false }], [17, { name: 'ctrl', selected: false }], [16, { name: 'shift', selected: false }], [18, { name: 'alt', selected: false }]]);
+/**
+ * Keeps the special key states for building
+ * command strings from
+ */
+var metaKeysState = new Map([[91, { name: 'cmd', selected: false }], [17, { name: 'ctrl', selected: false }], [16, { name: 'shift', selected: false }], [18, { name: 'alt', selected: false }]]);
 
 /**
  * Flag to denote special key(s) have
@@ -151,7 +155,7 @@ function unlisten() {
 
 /**
  * Get any registered elements and map over them
- * 
+ *
  * @param {Event} event - Keyboard event
  */
 function map(event) {
@@ -161,7 +165,7 @@ function map(event) {
 /**
  * Map the key(s) that were pressed to any actions on the
  * current element
- * 
+ *
  * @param {Event} event - Keyboard event
  * @param {HTMLElement} element - The HTML element to check subscriptions on
  */
@@ -189,7 +193,7 @@ var doMap = function doMap(event) {
 
 /**
  * Adds the key to the command string
- * 
+ *
  * @param {integer} key - The key code of the event
  */
 function addKeyToCommand(key) {
@@ -198,7 +202,7 @@ function addKeyToCommand(key) {
 
 /**
  * Execute the action callback function
- * 
+ *
  * @param {HTMLElement} element - The HTML element to execute the callback on
  * @param {Object} subscription - The subscription for this element
  * @param {Object} action - The action asscoiated with the key sequence
@@ -259,7 +263,7 @@ function addMetaKeysToCommand() {
 /**
  * Checks if the key is a special key and sets it
  * if it is
- * 
+ *
  * @param {integer} key - The key code of the event
  */
 function isMetaKey(key) {
@@ -306,11 +310,11 @@ function resetMetaKeys() {
 /**
  * Find registered elements by traversing up from the
  * event target element and returning any registered elements
- * 
+ *
  * @param {Event} event - Keyboard event
  */
 function findElements(event) {
-  // const path = 
+  // const path =
   return (event.path || event.composedPath && event.composedPath() || getPath(event)).filter(function (elm) {
     return subscriptions.get(elm);
   });
@@ -319,7 +323,7 @@ function findElements(event) {
 /**
  * Gets event path in browsers that don't support event.path
  * or event.composedPath()
- * 
+ *
  * @param {Event} event - Keyboard event
  */
 function getPath(event) {
@@ -332,7 +336,7 @@ function getPath(event) {
   if (document) {
     path.push(document);
   }
-  if (Window) {
+  if (typeof Window !== 'undefined') {
     path.push(Window);
   }
   return path;
@@ -341,8 +345,8 @@ function getPath(event) {
 /**
  * If not using the cmd key and the key pressed is the
  * cmd key then convert it to the ctrl key
- * 
- * @param {Boolean} useCmdKey - Whether to use the command key 
+ *
+ * @param {Boolean} useCmdKey - Whether to use the command key
  *   or change it to the ctrl key
  * @param {Event} event - Keyboard event
  */
@@ -362,11 +366,11 @@ function unsubscribe() {
  *
  * @param {Object} options - Configuration options
  * @param {HTMLElement} options.elm - The HTML element to bind the actions to
- * @param {Array} options.import - An array of pre-configured actions
+ * @param {Array} options.use - An array of pre-configured actions
  * @param {Array} options.actions - An array of action defnitions
- * @param {Object} options.import - Properties to pass to all actions
- * @param {Array} options.useCmd - Flag to denote using the cmd key 
- * 
+ * @param {Object} options.props - Properties to pass to all actions
+ * @param {Array} options.useCmdKey - Flag to denote using the cmd key
+ *
  * @returns {Object} An unsubscribe function and the listen function for testing purposes
  * @throws Throws an error if no element option is supplied
  */
@@ -379,6 +383,7 @@ function Keyboard(options) {
     props: options.props || {},
     actions: new Map((options.import || []).concat(options.actions || []))
   });
+  document = options.document ? options.document : window.document;
   listen();
   return {
     unsubscribe: unsubscribe,

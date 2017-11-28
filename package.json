@@ -6,7 +6,8 @@
   "module": "src/keyboard-events.js",
   "scripts": {
     "build": "rollup -c && rollup -c ./rollup.min.config.js",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "rollup ./tests/index.js --e tape,jsdom,simulant --output.format cjs | node | tap-difflet"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,12 @@
     "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
     "babel-preset-latest": "^6.24.1",
     "babel-register": "^6.26.0",
-    "rollup": "^0.48.2",
+    "jsdom": "^11.5.1",
+    "rollup": "^0.52.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-butternut": "^0.1.0",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "tap-difflet": "^0.7.0",
+    "tape": "^4.8.0"
   }
 }
