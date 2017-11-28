@@ -377,7 +377,7 @@ function Keyboard(options) {
   subscriptions.set(options.elm, {
     useCmdKey: options.useCmdKey || false,
     props: options.props || {},
-    actions: new Map((options.import || []).concat(options.actions || []))
+    actions: new Map((options.use || []).concat(options.actions || []))
   });
   document = options.document ? options.document : window.document;
   listen();
