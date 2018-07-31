@@ -82,7 +82,7 @@ k.unsubscribe();
 
 // cancel all keyboard subscriptions
 // (it's unlikely you will want this)
-Keyboard.cancel();
+Keyboard.clear();
 ```
 
 > NOTE: It is possible to have nested listeners as the module will map over any elements that are subscribed. So you can set global listeners on the body that will still execute if another registered element has focus. In the case where two elements are registered for the same action e.g. `enter`, then the action for both will be executed.
@@ -121,7 +121,7 @@ import MyActions from 'my-actions.js';
 Keyboard({
   elm: document.querySelector('#input'),
   props: {},                             
-  import: MyActions,    // import the actions from my-actions.js
+  use: MyActions,    // import the actions from my-actions.js
   actions: [            // extend/overwrite the imported actions with your own              
     ['enter', {                          
       fn: process
