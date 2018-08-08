@@ -286,7 +286,7 @@ function Keyboard(options) {
   document = options.document
     ? options.document
     : window.document;
-  listen(otions.elm);
+  listen(options.elm);
   return {
     unsubscribe,
     listen,

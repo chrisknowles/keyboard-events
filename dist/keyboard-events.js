@@ -389,7 +389,7 @@ function Keyboard(options) {
     actions: new Map((options.use || []).concat(options.actions || []))
   });
   document = options.document ? options.document : window.document;
-  listen(otions.elm);
+  listen(options.elm);
   return {
     unsubscribe: unsubscribe,
     listen: listen
