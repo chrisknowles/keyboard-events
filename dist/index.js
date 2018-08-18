@@ -135,7 +135,7 @@ var subscriptions = new Map();
  */
 function listen(elm) {
   unlisten(elm);
-  elm.addEventListener('keydown', map);
+  elm.addEventListener('keydown', map(elm));
   elm.addEventListener('keyup', resetMetaKeys);
 }
 
@@ -143,7 +143,7 @@ function listen(elm) {
  * Stop listening to key events on the body element
  */
 function unlisten(elm) {
-  elm.removeEventListener('keydown', map);
+  elm.removeEventListener('keydown', map(elm));
   elm.removeEventListener('keyup', resetMetaKeys);
 }
 
@@ -152,9 +152,13 @@ function unlisten(elm) {
  *
  * @param {Event} event - Keyboard event
  */
-function map(event) {
-  findElements(event).map(doMap(event));
-}
+var map = function map(elm) {
+  return function (event) {
+    event.data = elm.dataset.keyevent;
+    // event.stopPropagation();
+    findElements(event).map(doMap(event));
+  };
+};
 
 /**
  * Map the key(s) that were pressed to any actions on the
@@ -178,7 +182,9 @@ var doMap = function doMap(event) {
       // get the action associated with the command
       var action = subscription.actions.get(command.toLowerCase());
       // do callback
-      executeCallback(element, subscription, action, event);
+      if (element.dataset.keyevent === event.data) {
+        executeCallback(element, subscription, action, event);
+      }
       // clear command
       command = '';
     }
@@ -379,6 +385,7 @@ function Keyboard(options) {
   if (!options.elm) {
     throw new Error('\n      Trying to create a keyboard event listener without providing\n      an element to listen on\n    ');
   }
+  options.elm.dataset.keyevent = Math.round(Math.random() * 1000000);
   subscriptions.set(options.elm, {
     useCmdKey: options.useCmdKey || false,
     props: options.props || {},

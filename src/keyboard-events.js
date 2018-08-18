@@ -78,7 +78,7 @@ const subscriptions = new Map();
  */
 function listen(elm) {
   unlisten(elm);
-  elm.addEventListener('keydown', map);
+  elm.addEventListener('keydown', map(elm));
   elm.addEventListener('keyup', resetMetaKeys);
 }
 
@@ -86,7 +86,7 @@ function listen(elm) {
  * Stop listening to key events on the body element
  */
 function unlisten(elm) {
-  elm.removeEventListener('keydown', map);
+  elm.removeEventListener('keydown', map(elm));
   elm.removeEventListener('keyup', resetMetaKeys);
 }
 
@@ -96,9 +96,11 @@ function unlisten(elm) {
  *
  * @param {Event} event - Keyboard event
  */
-function map(event) {
+const map = elm => (event) => {
+  event.data = elm.dataset.keyevent;
+  // event.stopPropagation();
   findElements(event).map(doMap(event));
-}
+};
 
 /**
  * Map the key(s) that were pressed to any actions on the
@@ -121,7 +123,9 @@ const doMap = event => element => {
     // get the action associated with the command
     const action = subscription.actions.get(command.toLowerCase());
     // do callback
-    executeCallback(element, subscription, action, event);
+    if (element.dataset.keyevent === event.data) {
+      executeCallback(element, subscription, action, event);
+    }
     // clear command
     command = '';
   }
@@ -278,6 +282,7 @@ function Keyboard(options) {
       an element to listen on
     `);
   }
+  options.elm.dataset.keyevent = Math.round(Math.random() * 1000000);
   subscriptions.set(options.elm, {
     useCmdKey: options.useCmdKey || false,
     props: options.props || {},
