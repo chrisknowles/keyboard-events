@@ -1,7 +1,7 @@
 import babel from 'rollup-plugin-babel';
 
 export default {
-  input: 'src/keyboard-events.js',
+  input: 'src/index.js',
   output: [
     {
       file: 'dist/index.js',

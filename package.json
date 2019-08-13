@@ -1,12 +1,11 @@
 {
   "name": "keyboard-events",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A module to wrap keyboard events on the DOM",
   "main": "dist/index.js",
-  "module": "src/keyboard-events.js",
+  "module": "src/index.js",
   "scripts": {
-    "build": "rollup -c && rollup -c ./rollup.min.config.js",
-    "prepublish": "npm run build"
+    "build": "rollup -c && rollup -c ./rollup.min.config.js"
   },
   "repository": {
     "type": "git",

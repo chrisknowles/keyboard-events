@@ -2,7 +2,7 @@ import babel from 'rollup-plugin-babel';
 import butternut from 'rollup-plugin-butternut';
 
 export default {
-  input: 'src/keyboard-events.js',
+  input: 'src/index.js',
   output: [
     {
       file: 'dist/keyboard-events.min.js',

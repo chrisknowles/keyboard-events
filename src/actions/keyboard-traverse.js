@@ -6,7 +6,7 @@
 /**
  * The list of keys mapped to functions
  */
-const actions = [
+const KeyboardTraverseActions = [
   ['arrow-up', {fn: prev}],
   ['arrow-left', {fn: prev}],
   ['arrow-down', {fn: next}],
@@ -27,7 +27,7 @@ const actions = [
 
 /**
  * Move focus to the previous element in the list
- * 
+ *
  * @param {Object} data Keyboard action data
  */
 function prev(data) {
@@ -79,7 +79,7 @@ function last(data) {
  *
  * @param {Object} data Keyboard action data
  */
-function up(data) { 
+function up(data) {
   data.event.preventDefault();
   const first = data.element.querySelectorAll(
     '.' + data.props.traverseItemClass + '[tabindex="0"]'
@@ -121,4 +121,4 @@ const checkSibling = (data, sibling) =>
     && data.event.target[sibling]
       .classList.contains(data.props.traverseItemClass);
 
-export default actions;
+export {KeyboardTraverseActions};
